@@ -1,19 +1,21 @@
 <div class="row">
   <div class="col-12">
+    <!-- ページヘッダー：タイトルと新規追加ボタン -->
     <div class="d-flex justify-content-between align-items-center mb-4">
       <h2>Todo List</h2>
+      <!-- 新しいTODOを追加するボタン -->
       <a routerLink="/add-todo" class="btn btn-primary">
         <i class="bi bi-plus-circle"></i> Add New Todo
       </a>
     </div>
 
-    <!-- Filters and Search -->
+    <!-- フィルターと検索機能 -->
     <div class="card mb-4">
       <div class="card-header">
         <h5 class="mb-0"><i class="bi bi-funnel"></i> Filters & Search</h5>
       </div>
       <div class="card-body">
-        <!-- Search -->
+        <!-- 検索ボックス -->
         <div class="row mb-3">
           <div class="col-md-6">
             <label for="search" class="form-label">Search</label>
@@ -21,6 +23,7 @@
               <span class="input-group-text">
                 <i class="bi bi-search"></i>
               </span>
+              <!-- タイトルまたは説明で検索する入力フィールド -->
               <input
                 type="text"
                 class="form-control"
@@ -33,8 +36,9 @@
           </div>
         </div>
 
-        <!-- Filters -->
+        <!-- フィルター選択オプション -->
         <div class="row mb-3">
+          <!-- ステータスフィルター -->
           <div class="col-md-3">
             <label for="statusFilter" class="form-label">Status</label>
             <select
@@ -49,6 +53,7 @@
             </select>
           </div>
 
+          <!-- 優先度フィルター -->
           <div class="col-md-3">
             <label for="priorityFilter" class="form-label">Priority</label>
             <select
@@ -68,6 +73,7 @@
             </select>
           </div>
 
+          <!-- カテゴリフィルター -->
           <div class="col-md-3">
             <label for="categoryFilter" class="form-label">Category</label>
             <select
@@ -87,9 +93,11 @@
             </select>
           </div>
 
+          <!-- ソートオプション -->
           <div class="col-md-3">
             <label for="sortBy" class="form-label">Sort By</label>
             <div class="input-group">
+              <!-- ソート基準選択 -->
               <select
                 class="form-select"
                 id="sortBy"
@@ -103,6 +111,7 @@
                   {{ option.label }}
                 </option>
               </select>
+              <!-- ソート順序切り替えボタン -->
               <button
                 class="btn btn-outline-secondary"
                 type="button"
@@ -122,9 +131,10 @@
           </div>
         </div>
 
-        <!-- Clear Filters Button -->
+        <!-- フィルタークリアボタン -->
         <div class="row">
           <div class="col-12">
+            <!-- 全てのフィルターをリセットするボタン -->
             <button
               class="btn btn-outline-secondary btn-sm"
               (click)="clearFilters()"
@@ -136,13 +146,14 @@
       </div>
     </div>
 
-    <!-- Results Count -->
+    <!-- 検索結果件数表示 -->
     <div class="mb-3">
       <small class="text-muted">
         Showing {{ todos.length }} of {{ allTodos.length }} todos
       </small>
     </div>
 
+    <!-- TODOがない場合のメッセージ -->
     <div *ngIf="todos.length === 0" class="alert alert-info text-center">
       <h4>No todos available</h4>
       <p>
@@ -150,45 +161,58 @@
       </p>
     </div>
 
+    <!-- TODOカード一覧表示 -->
     <div class="row" *ngIf="todos.length > 0">
+      <!-- 各TODOアイテムをカード形式で表示 -->
       <div class="col-md-6 col-lg-4 mb-3" *ngFor="let todo of todos">
+        <!-- 期限切れの場合は赤いボーダーを表示 -->
         <div class="card h-100" [class.border-danger]="isOverdue(todo)">
+          <!-- カードヘッダー：ステータスと優先度バッジ -->
           <div class="card-header p-2">
             <div class="d-flex justify-content-between align-items-center">
+              <!-- ステータスバッジ -->
               <span class="badge {{ getStatusBadgeClass(todo.status) }}">
                 {{ todo.status | titlecase }}
               </span>
+              <!-- 優先度バッジ -->
               <span class="badge {{ getPriorityBadgeClass(todo.priority) }}">
                 {{ todo.priority | titlecase }}
               </span>
             </div>
           </div>
 
+          <!-- カードボディ：TODOの詳細情報 -->
           <div class="card-body">
+            <!-- TODOタイトル（完了時は打ち消し線表示） -->
             <h5
               class="card-title"
               [class.text-decoration-line-through]="todo.isCompleted"
               [class.text-success]="todo.isCompleted"
             >
+              <!-- 詳細ページへのリンク -->
               <a [routerLink]="['/todo', todo.id]" 
                  class="text-decoration-none"
                  [class.text-success]="todo.isCompleted">
                 {{ todo.title }}
               </a>
             </h5>
+            <!-- カテゴリ表示 -->
             <p class="card-text text-muted small mb-2">
               <i class="bi bi-tag"></i> {{ todo.category | titlecase }}
             </p>
+            <!-- TODO説明 -->
             <p class="card-text" 
                [class.text-muted]="!todo.isCompleted"
                [class.text-success]="todo.isCompleted">
               {{ todo.description }}
             </p>
 
+            <!-- 期限日表示（設定されている場合のみ） -->
             <div *ngIf="todo.dueDate" class="mb-2">
               <small class="text-muted">
                 <i class="bi bi-calendar-event"></i>
                 Due: {{ formatDate(todo.dueDate) }}
+                <!-- 期限切れ警告 -->
                 <span *ngIf="isOverdue(todo)" class="text-danger ms-1">
                   <i class="bi bi-exclamation-triangle"></i> Overdue
                 </span>
@@ -196,8 +220,10 @@
             </div>
           </div>
 
+          <!-- カードフッター：アクションボタン群 -->
           <div class="card-footer p-2">
             <div class="btn-group w-100" role="group">
+              <!-- 完了ステータス切り替えボタン -->
               <button
                 class="btn btn-sm"
                 [class.btn-success]="!todo.isCompleted"
@@ -214,6 +240,7 @@
                 ></i>
               </button>
 
+              <!-- 編集ページへのリンク -->
               <a
                 [routerLink]="['/edit-todo', todo.id]"
                 class="btn btn-outline-primary btn-sm"
@@ -222,6 +249,7 @@
                 <i class="bi bi-pencil"></i>
               </a>
 
+              <!-- 削除ボタン -->
               <button
                 class="btn btn-outline-danger btn-sm"
                 (click)="deleteTodo(todo.id)"

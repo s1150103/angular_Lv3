@@ -1,9 +1,12 @@
+<!-- TODOフォームページ -->
 <div class="row justify-content-center">
   <div class="col-md-8">
+    <!-- ページタイトル（編集モードまたは新規作成モード） -->
     <h2>{{ isEditMode ? 'Edit' : 'Add New' }} Todo</h2>
 
+    <!-- TODOフォーム -->
     <form [formGroup]="todoForm" (ngSubmit)="onSubmit()">
-      <!-- Title -->
+      <!-- タイトル入力フィールド -->
       <div class="mb-3">
         <label for="title" class="form-label">Title *</label>
         <input
@@ -13,12 +16,13 @@
           formControlName="title"
           [class.is-invalid]="isFieldInvalid('title')"
         />
+        <!-- バリデーションエラーメッセージ -->
         <div *ngIf="isFieldInvalid('title')" class="invalid-feedback">
           {{ getFieldError('title') }}
         </div>
       </div>
 
-      <!-- Description -->
+      <!-- 説明入力フィールド -->
       <div class="mb-3">
         <label for="description" class="form-label">Description *</label>
         <textarea
@@ -28,13 +32,14 @@
           rows="3"
           [class.is-invalid]="isFieldInvalid('description')"
         ></textarea>
+        <!-- バリデーションエラーメッセージ -->
         <div *ngIf="isFieldInvalid('description')" class="invalid-feedback">
           {{ getFieldError('description') }}
         </div>
       </div>
 
       <div class="row">
-        <!-- Status -->
+        <!-- ステータス選択 -->
         <div class="col-md-6 mb-3">
           <label for="status" class="form-label">Status *</label>
           <select
@@ -47,12 +52,13 @@
               {{ status | titlecase }}
             </option>
           </select>
+          <!-- バリデーションエラーメッセージ -->
           <div *ngIf="isFieldInvalid('status')" class="invalid-feedback">
             {{ getFieldError('status') }}
           </div>
         </div>
 
-        <!-- Priority -->
+        <!-- 優先度選択 -->
         <div class="col-md-6 mb-3">
           <label for="priority" class="form-label">Priority *</label>
           <select
@@ -65,6 +71,7 @@
               {{ priority | titlecase }}
             </option>
           </select>
+          <!-- バリデーションエラーメッセージ -->
           <div *ngIf="isFieldInvalid('priority')" class="invalid-feedback">
             {{ getFieldError('priority') }}
           </div>
@@ -72,7 +79,7 @@
       </div>
 
       <div class="row">
-        <!-- Category -->
+        <!-- カテゴリ選択 -->
         <div class="col-md-6 mb-3">
           <label for="category" class="form-label">Category *</label>
           <select
@@ -85,12 +92,13 @@
               {{ category | titlecase }}
             </option>
           </select>
+          <!-- バリデーションエラーメッセージ -->
           <div *ngIf="isFieldInvalid('category')" class="invalid-feedback">
             {{ getFieldError('category') }}
           </div>
         </div>
 
-        <!-- Due Date -->
+        <!-- 期限日選択 -->
         <div class="col-md-6 mb-3">
           <label for="dueDate" class="form-label">Due Date</label>
           <input
@@ -102,7 +110,9 @@
         </div>
       </div>
 
+      <!-- フォームアクションボタン -->
       <div class="d-flex gap-2">
+        <!-- 保存/更新ボタン（フォームが無効な場合は無効化） -->
         <button
           type="submit"
           class="btn btn-primary"
@@ -110,6 +120,7 @@
         >
           {{ isEditMode ? 'Update' : 'Add' }} Todo
         </button>
+        <!-- キャンセルボタン -->
         <button type="button" class="btn btn-secondary" (click)="onCancel()">
           Cancel
         </button>

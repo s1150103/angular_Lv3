@@ -1,10 +1,15 @@
+<!-- メインナビゲーションバー -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container">
+    <!-- アプリケーション名 -->
     <a class="navbar-brand" href="#">Todo App</a>
+    <!-- ナビゲーションメニュー -->
     <div class="navbar-nav">
+      <!-- TODO一覧ページへのリンク -->
       <a class="nav-link" routerLink="/todos" routerLinkActive="active"
         >Todo List</a
       >
+      <!-- TODO追加ページへのリンク -->
       <a class="nav-link" routerLink="/add-todo" routerLinkActive="active"
         >Add Todo</a
       >
@@ -12,6 +17,8 @@
   </div>
 </nav>
 
+<!-- メインコンテンツエリア -->
 <div class="container mt-4">
+  <!-- ルーターアウトレット：現在のパスに対応したコンポーネントを表示 -->
   <router-outlet></router-outlet>
 </div>
