@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
-import { FormsModule } from '@angular/forms';
 import {
   Todo,
   TodoStatus,
@@ -12,8 +9,6 @@ import { TodoService } from '../../services/todo.service';
 
 @Component({
   selector: 'app-todo-list',
-  standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule],
   templateUrl: './todo-list.component.html',
   styleUrl: './todo-list.component.css',
 })

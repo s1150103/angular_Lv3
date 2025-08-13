@@ -44,13 +44,23 @@ ng serve
 
 ## 🛠️ 技術スタック
 
-- **Frontend**: Angular 17 (Standalone Components)
+- **Frontend**: Angular 17 (NgModule Architecture)
 - **Forms**: Reactive Forms (FormBuilder, Validators)
 - **Styling**: Bootstrap 5 + Bootstrap Icons
 - **Data**: LocalStorage API
 - **Language**: TypeScript
 - **Build**: Angular CLI
 - **Code Quality**: ESLint + Prettier
+
+## 🔄 アーキテクチャ変更履歴
+
+### v2.0.0 - NgModuleベースへの移行
+- **変更内容**: Standalone ComponentsからNgModuleベースのアーキテクチャに変更
+- **理由**: より伝統的なAngularの構成を採用し、コンポーネント間の依存関係を明確化
+- **影響**: 
+  - `app.module.ts`を新規作成し、全コンポーネントを`declarations`で管理
+  - `main.ts`でモジュールベースのブートストラップを使用
+  - 各コンポーネントからスタンドアロン設定を削除
 
 ## 📦 インストール
 

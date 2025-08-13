@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterLink, ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   Todo,
   TodoStatus,
@@ -11,8 +10,6 @@ import { TodoService } from '../../services/todo.service';
 
 @Component({
   selector: 'app-todo-detail',
-  standalone: true,
-  imports: [CommonModule, RouterLink],
   templateUrl: './todo-detail.component.html',
   styleUrl: './todo-detail.component.css',
 })

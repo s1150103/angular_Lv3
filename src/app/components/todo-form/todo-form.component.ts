@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {
-  ReactiveFormsModule,
   FormBuilder,
   FormGroup,
   Validators,
@@ -17,8 +15,6 @@ import {
 
 @Component({
   selector: 'app-todo-form',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './todo-form.component.html',
   styleUrl: './todo-form.component.css',
 })
