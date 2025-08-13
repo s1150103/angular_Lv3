@@ -1,0 +1,176 @@
+<div class="container-fluid">
+  <div *ngIf="loading" class="text-center">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && todo" class="row">
+    <div class="col-12">
+      <!-- Header -->
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a routerLink="/todos">Todo List</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+              {{ todo.title }}
+            </li>
+          </ol>
+        </nav>
+
+        <div class="btn-group" role="group">
+          <a
+            [routerLink]="['/edit-todo', todo.id]"
+            class="btn btn-outline-primary"
+            title="Edit Todo"
+          >
+            <i class="bi bi-pencil"></i> Edit
+          </a>
+          <button
+            class="btn btn-outline-danger"
+            (click)="deleteTodo()"
+            title="Delete Todo"
+          >
+            <i class="bi bi-trash"></i> Delete
+          </button>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="row">
+        <div class="col-lg-8">
+          <!-- Todo Card -->
+          <div class="card" [class.border-danger]="isOverdue()">
+            <div class="card-header">
+              <div class="d-flex justify-content-between align-items-center">
+                <h1
+                  class="h3 mb-0"
+                  [class.text-decoration-line-through]="todo.isCompleted"
+                  [class.text-success]="todo.isCompleted"
+                >
+                  {{ todo.title }}
+                </h1>
+                <div class="d-flex gap-2">
+                  <span class="badge {{ getStatusBadgeClass(todo.status) }}">
+                    {{ todo.status | titlecase }}
+                  </span>
+                  <span
+                    class="badge {{ getPriorityBadgeClass(todo.priority) }}"
+                  >
+                    {{ todo.priority | titlecase }} Priority
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <div class="mb-4">
+                <h5>Description</h5>
+                <p class="card-text" 
+                   [class.text-muted]="!todo.isCompleted"
+                   [class.text-success]="todo.isCompleted">
+                  {{ todo.description }}
+                </p>
+              </div>
+
+              <!-- Overdue Warning -->
+              <div *ngIf="isOverdue()" class="alert alert-danger" role="alert">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+                <strong>Overdue!</strong> This todo is past its due date.
+              </div>
+
+              <!-- Action Button -->
+              <div class="mb-3">
+                <button
+                  class="btn"
+                  [class.btn-success]="!todo.isCompleted"
+                  [class.btn-warning]="todo.isCompleted"
+                  (click)="toggleStatus()"
+                >
+                  <i
+                    class="bi"
+                    [class.bi-check-circle-fill]="!todo.isCompleted"
+                    [class.bi-arrow-clockwise]="todo.isCompleted"
+                  ></i>
+                  {{
+                    todo.isCompleted ? 'Mark as Pending' : 'Mark as Completed'
+                  }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+          <!-- Details Card -->
+          <div class="card">
+            <div class="card-header">
+              <h5 class="mb-0"><i class="bi bi-info-circle"></i> Details</h5>
+            </div>
+            <div class="card-body">
+              <div class="row mb-3">
+                <div class="col-sm-4 fw-bold">Category:</div>
+                <div class="col-sm-8">
+                  <span class="badge bg-secondary">
+                    <i class="bi bi-tag"></i> {{ todo.category | titlecase }}
+                  </span>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col-sm-4 fw-bold">Due Date:</div>
+                <div class="col-sm-8">
+                  <span *ngIf="todo.dueDate; else noDueDate">
+                    {{ formatDateOnly(todo.dueDate) }}
+                  </span>
+                  <ng-template #noDueDate>
+                    <span class="text-muted">Not set</span>
+                  </ng-template>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col-sm-4 fw-bold">Created:</div>
+                <div class="col-sm-8">
+                  <small class="text-muted">
+                    {{ formatDate(todo.createdAt) }}
+                  </small>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col-sm-4 fw-bold">Updated:</div>
+                <div class="col-sm-8">
+                  <small class="text-muted">
+                    {{ formatDate(todo.updatedAt) }}
+                  </small>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-4 fw-bold">ID:</div>
+                <div class="col-sm-8">
+                  <code>#{{ todo.id }}</code>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && !todo" class="text-center">
+    <div class="alert alert-warning" role="alert">
+      <h4 class="alert-heading">Todo Not Found</h4>
+      <p>The todo you're looking for doesn't exist.</p>
+      <hr />
+      <a routerLink="/todos" class="btn btn-primary">
+        <i class="bi bi-arrow-left"></i> Back to Todo List
+      </a>
+    </div>
+  </div>
+</div>
